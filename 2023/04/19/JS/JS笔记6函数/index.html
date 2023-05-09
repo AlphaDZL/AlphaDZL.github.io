@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS笔记6 函数 | AlphaDZL的主页</title><meta name="author" content="AlphaDZL"><meta name="copyright" content="AlphaDZL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="定义函数、函数调用、函数的要素、调用、栈递归与爆栈、函数提升、arguments与this、通过call指定this调用函数、箭头函数、立即执行函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS笔记6 函数">
+<meta property="og:url" content="https://alphadzl.github.io/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="AlphaDZL的主页">
+<meta property="og:description" content="定义函数、函数调用、函数的要素、调用、栈递归与爆栈、函数提升、arguments与this、通过call指定this调用函数、箭头函数、立即执行函数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alphadzl.github.io/img/default_cover.png">
+<meta property="article:published_time" content="2023-04-19T01:33:01.000Z">
+<meta property="article:modified_time" content="2023-05-09T13:18:02.859Z">
+<meta property="article:author" content="AlphaDZL">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alphadzl.github.io/img/default_cover.png"><link rel="shortcut icon" href="/alphadzl/img/favicon.svg"><link rel="canonical" href="https://alphadzl.github.io/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/alphadzl/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/alphadzl/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":1600},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS笔记6 函数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-09 21:18:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/avatar_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/alphadzl/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/alphadzl/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/alphadzl/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/alphadzl/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/alphadzl/" title="AlphaDZL的主页"><span class="site-name">AlphaDZL的主页</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/alphadzl/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS笔记6 函数<a class="post-edit-link" href="https://github.com/AlphaDZL/_posts/JS/JS笔记6函数.md" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-19T01:33:01.000Z" title="发表于 2023-04-19 09:33:01">2023-04-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-09T13:18:02.859Z" title="更新于 2023-05-09 21:18:02">2023-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/alphadzl/categories/JS%E7%AC%94%E8%AE%B0/">JS笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span></div></div></div><article class="post-content" id="article-container"><h1 id="定义一个函数"><a href="#定义一个函数" class="headerlink" title="定义一个函数"></a>定义一个函数</h1><p>注意:</p>
+<ol>
+<li>函数是一个对象</li>
+<li>所有函数都是Function构造出来的,包括Object,Array,Function(没错)也是</li>
+</ol>
+<h2 id="具名函数"><a href="#具名函数" class="headerlink" title="具名函数"></a>具名函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> 函数名(形参<span class="number">1</span>,形参<span class="number">2</span>)&#123;</span><br><span class="line">    语句</span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>具名函数去掉函数名就是匿名函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="keyword">function</span>(<span class="params">x,y</span>)&#123;<span class="keyword">return</span> x+y&#125;</span><br></pre></td></tr></table></figure>
+
+<p>右边是一个匿名函数,左边是赋值<br>匿名函数也叫函数表达式</p>
+<p><strong>易错点</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">x,y</span>)&#123;<span class="keyword">return</span> x+y&#125;	<span class="comment">//这句话本身是没有问题的</span></span><br><span class="line"><span class="title function_">fn</span>(<span class="number">1</span>,<span class="number">2</span>)	<span class="comment">//会报错</span></span><br></pre></td></tr></table></figure>
+
+<p>首先,a和fn存的都是这个函数的地址<br>报错的原因是:如果函数声明在等于号右边,那这个函数的作用域就只能在这个等于号的右边,其他地方下想要调用这个函数就只能用a()来调用,如果不在等于号右边则作用于全局</p>
+<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//示例一</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">f1</span>= x=&gt;x*x</span><br><span class="line"><span class="comment">//		↑</span></span><br><span class="line"><span class="keyword">let</span> f1=<span class="keyword">function</span>(<span class="params">x</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x*x </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//示例二</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">f2</span>=(<span class="params">x,y</span>)=&gt;<span class="keyword">return</span> x*y</span><br><span class="line"></span><br><span class="line"><span class="comment">//示例三</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">f3</span>=(<span class="params">x,y</span>)=&gt;&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;x+y:&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意点</strong></p>
+<ol>
+<li>如果有两个参数,参数列表就必须用()括起来</li>
+<li>如果=&gt;后面的语句有多句,则用{}括起来,且不能省略return语句</li>
+</ol>
+<p><strong>易错点</strong></p>
+<ol>
+<li><code>let f4=x=&gt;&#123;name:x&#125;</code>我们的意思是调用f4(x)时,返回一个对象{name:x},但是JS会误解,把{name:x}当成了一个块(label语句),JS并不报错,我们如果想要达成预期效果的话,得这样写<code>let f4=x=&gt;(&#123;name:x&#125;)</code></li>
+</ol>
+<h1 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h1><h2 id="fn与fn"><a href="#fn与fn" class="headerlink" title="fn与fn()"></a>fn与fn()</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">fn</span>=(<span class="params"></span>)=&gt;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line">fn</span><br><span class="line"><span class="title function_">fn</span>()</span><br></pre></td></tr></table></figure>
+
+<p>单独写fn并不会有结果,因为fn并没有调用,加上括号后fn(),才会调用fn</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title function_">fn</span>=(<span class="params"></span>)=&gt;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> fn2=fn</span><br><span class="line"><span class="title function_">fn2</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong></p>
+<ol>
+<li>fn保存了匿名函数的地址</li>
+<li>地址被复制给了fn2</li>
+<li>fn2调用了匿名函数</li>
+<li>fn和fn2实际上都是匿名函数的引用</li>
+<li>真正的函数就是fn也不是fn2</li>
+</ol>
+<h1 id="函数的要素"><a href="#函数的要素" class="headerlink" title="函数的要素"></a>函数的要素</h1><h2 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h2><ol>
+<li>示例一<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<strong>不会打印,还没调用fn</strong></li>
+<li>示例二<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line">a=<span class="number">2</span></span><br><span class="line"><span class="title function_">fn</span>()</span><br></pre></td></tr></table></figure>
+打印2</li>
+<li>示例三<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>()</span><br><span class="line">a=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+打印1</li>
+<li>示例四<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">    &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>()</span><br><span class="line">a=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<strong>打印出2</strong></li>
+<li>示例五<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i)</span><br><span class="line">    &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<strong>打印出6个6而不是0 1 2 3 4 5</strong></li>
+<li>示例六<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    	<span class="variable language_">console</span>.<span class="title function_">log</span>(i)</span><br><span class="line">    &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<strong>打印出0 1 2 3 4 5，因为JS在for循环和let一起用的时候会特殊处理，每次循环都会把此时的i复制一份，不跟随新的i变化</strong></li>
+</ol>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">f2</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> a <span class="number">2</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a)	打印出<span class="number">1</span><span class="comment">//</span></span><br><span class="line">    a=<span class="number">3</span></span><br><span class="line">    <span class="title function_">f2</span>()	<span class="comment">//打印出2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">f1</span>()</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>当在window上加一个元素，该元素自动变成全局变量</li>
+<li>作用域也可嵌套</li>
+</ol>
+<h3 id="作用域规则"><a href="#作用域规则" class="headerlink" title="作用域规则"></a>作用域规则</h3><p>如果多级作用域有相同变量a</p>
+<ol>
+<li>在查号a的声明时，就向上取最近的作用域（简称就近原则）</li>
+<li>查找a的过程与函数执行无关</li>
+<li>但a的值与函数执行无关</li>
+</ol>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>如果一个函数用到了外部的变量，那么这个函数加这个变量就叫做闭包</p>
+<h2 id="形式参数"><a href="#形式参数" class="headerlink" title="形式参数"></a>形式参数</h2><p>形式参数意思就是非实际参数，调用函数时，实际参数会赋值给形式参数<br>形参的本质就是变量声明</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x,y</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//近似理解为</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> x=<span class="variable language_">arguments</span>[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">var</span> y=<span class="variable language_">arguments</span>[<span class="number">1</span>]	</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>形参可多可少</strong></p>
+<p>多</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x+<span class="variable language_">arguments</span>[<span class="number">1</span>] <span class="comment">//arguments就是所有的参数</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>,<span class="number">2</span>)	<span class="comment">//正常运行!</span></span><br></pre></td></tr></table></figure>
+
+<p>少</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x,y,z</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>,<span class="number">2</span>)	<span class="comment">//正常运行!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><ol>
+<li>每个函数都有返回值,没写返回值则返回undefined</li>
+<li>函数执行完毕后才会返回</li>
+<li>只有函数有返回值<br>如<code>1+2</code>的值为3,<strong>并没有返回值</strong></li>
+</ol>
+<h1 id="调用栈，递归与爆栈"><a href="#调用栈，递归与爆栈" class="headerlink" title="调用栈，递归与爆栈"></a>调用栈，递归与爆栈</h1><p><strong>调用栈</strong></p>
+<ol>
+<li>JS引擎在调用一个函数前,需要把函数所在环境(地址)push到一个数组里,这个数组叫做调用栈</li>
+<li>等函数执行完了,就会把环境pop出来</li>
+<li>然后return到之前的环境,继续执行后续代码</li>
+</ol>
+<p><strong>爆栈</strong></p>
+<p>如果调用栈中压入的帧过多，程序就会崩溃</p>
+<ol>
+<li>递归函数的调用栈很长</li>
+<li>调用栈大小：chrome12578 Firefox26773 Node12536</li>
+</ol>
+<h1 id="函数提升"><a href="#函数提升" class="headerlink" title="函数提升"></a>函数提升</h1><ol>
+<li>会提升的情况<br><code>function fn()&#123;&#125;</code><br>不管把具名函数声明在哪里,它都会跑到第一行</li>
+<li>不会提升的情况<br><code>let fn=function()&#123;&#125;</code><br>此为赋值,右边的匿名函数声明不会提升</li>
+<li>函数必须先声明才能使用</li>
+</ol>
+<h1 id="arguments和this"><a href="#arguments和this" class="headerlink" title="arguments和this"></a>arguments和this</h1><p>每个函数都有arguments和this (除了箭头函数)</p>
+<h2 id="如何传arguments"><a href="#如何传arguments" class="headerlink" title="如何传arguments"></a>如何传arguments</h2><ol>
+<li>调用fn即可传arguments,fn(1,2,3)那么arguments就是[1,2,3]</li>
+<li>arguments是一个装了参数列表的伪数组,没有数组的共有属性,用Array.from()可获得数组</li>
+</ol>
+<h2 id="如何传this"><a href="#如何传this" class="headerlink" title="如何传this"></a>如何传this</h2><p>如果不给任何条件,this默认指向window (一般不用这个默认的this,直接用window就行)</p>
+<p>目前可以用 fn.call(xxx, 1,2,3) 传 this 和 arguments</p>
+<p>如果this传到的xxx不是对象,JS会自动封装成对象,比如fn.call(1) this得到的其实是new Number(1)后的对象</p>
+<p>如果不想让JS自动封装对象,加上’use strict’</p>
+<ol>
+<li>如果不加’use strict’,那么JS会尽量把你传的东西变成对象</li>
+<li>如果加上了’use strict’则没有这些奇奇怪怪的规则    </li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/image-20230421165541034.png" alt="image-20230421165541034"></p>
+<p><code>f.call(1,2,3,4)</code>1传给this 后面的2,3,4都传给arguments    </p>
+<h1 id="this是参数"><a href="#this是参数" class="headerlink" title="this是参数"></a>this是参数</h1><p><strong>this是隐藏参数 arguments是普通参数</strong></p>
+<p>假如没有this</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> person=&#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;name1&#x27;</span>,</span><br><span class="line">    <span class="title function_">sayHi</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`name:`</span>+person.<span class="property">name</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然,也可以选择在调用函数的时候把当前对象传进去</p>
+<p>我们可以用直接保存了对象地址的变量获取’name’,这种方法叫做引用</p>
+<p>this关键字解决的问题:函数如何如何获取一个还不知道名字叫什么的对象的引用</p>
+<p><strong>JS在每个函数中加了this</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//用 this 获取那个对象</span></span><br><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;name1&#x27;</span>,</span><br><span class="line">  <span class="title function_">sayHi</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`你好，我叫`</span> + <span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.<span class="title function_">sayHi</span>()</span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line">person.<span class="title function_">sayHi</span>(<span class="title function_">person</span>(隐藏了,写上会报错))</span><br><span class="line"><span class="comment">//然后 person 被传给 this 了（person 是个地址）</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，每个函数都能用 this 获取一个未知对象的引用了</p>
+<h1 id="通过call指定this调用函数"><a href="#通过call指定this调用函数" class="headerlink" title="通过call指定this调用函数"></a>通过call指定this调用函数</h1><p>虽然<code>person.sayHi()</code>会自动把person传到函数里,作为this,但最好还是自己指定this</p>
+<p>手动把person传到函数里作为this:<code>person.sayHi.call(person)</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x,y</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(x,y)</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line">add.<span class="title function_">call</span>(<span class="literal">undefined</span>,x,y)</span><br></pre></td></tr></table></figure>
+
+<p><strong>this两种使用方法</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//隐式传递</span></span><br><span class="line"><span class="title function_">fn</span>(<span class="number">1</span>,<span class="number">2</span>)	<span class="comment">//等价于fn.call(undefined,1,2)</span></span><br><span class="line">obj.<span class="property">child</span>.<span class="title function_">fn</span>(<span class="number">1</span>)	<span class="comment">//等价于obj.child.fn.call(obj.child,1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//显式传递</span></span><br><span class="line">fn.<span class="title function_">call</span>(<span class="literal">undefined</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">fn.<span class="title function_">apply</span>(<span class="literal">undefined</span>,[<span class="number">1</span>,<span class="number">2</span>])<span class="comment">//后面的参数用数组的形式</span></span><br></pre></td></tr></table></figure>
+
+
+<p>注:this的值在定义的时候并不确定,只有在call和调用的时候才被确定</p>
+<h1 id="绑定this"><a href="#绑定this" class="headerlink" title="绑定this"></a>绑定this</h1><h2 id="使用-bind-可以让-this-不被改变"><a href="#使用-bind-可以让-this-不被改变" class="headerlink" title="使用 .bind 可以让 this 不被改变"></a>使用 .bind 可以让 this 不被改变</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params">p1, p2</span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>, p1, p2)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> f2 = f1.<span class="title function_">bind</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;frank&#x27;</span>&#125;)</span><br><span class="line"><span class="comment">// 那么 f2 就是 f1 绑定了 this 之后的新函数</span></span><br><span class="line"><span class="title function_">f2</span>() <span class="comment">// 等价于 f1.call(&#123;name:&#x27;frank&#x27;&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bind-还可以绑定其他参数"><a href="#bind-还可以绑定其他参数" class="headerlink" title=".bind 还可以绑定其他参数"></a>.bind 还可以绑定其他参数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> f3 = f1.<span class="title function_">bind</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;frank&#x27;</span>&#125;, <span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line"><span class="title function_">f3</span>() <span class="comment">// 等价于 f1.call(&#123;name:&#x27;frank&#x27;&#125;, hi)</span></span><br><span class="line"><span class="comment">//此时再往f3传参数会往后面顺延</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="箭头函数没有this和arguments"><a href="#箭头函数没有this和arguments" class="headerlink" title="箭头函数没有this和arguments"></a>箭头函数没有this和arguments</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//里面的 this 就是外面的 this</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>) <span class="comment">// window</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">fn</span> = (<span class="params"></span>) =&gt; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>) </span><br><span class="line"><span class="title function_">fn</span>() <span class="comment">// window</span></span><br><span class="line"><span class="comment">//就算你加 call 都没有</span></span><br><span class="line">fn.<span class="title function_">call</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;frank&#x27;</span>&#125;) <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h1><p>如果想声明一个局部变量,必须要在一个函数fn里面声明var a=1,这样a才是局部变量,但是这样又同时增加了一个全局函数fn</p>
+<p>原理ES 5 时代，为了得到局部变量，必须引入一个函数但是这个函数如果有名字，就得不偿失于是这个函数必须是匿名函数声明匿名函数，然后立即加个 () 执行它但是 JS 标准认为这种语法不合法所以 JS 程序员寻求各种办法最终发现，只要在匿名函数前面加个运算符即可!、~、()、+、- 都可以但是这里面有些运算符会往上走所以方方推荐永远用 ! 来解决</p>
+<p>ES6声明局部变量</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a=<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/AlphaDZL">AlphaDZL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://alphadzl.github.io/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/">https://alphadzl.github.io/2023/04/19/JS/JS笔记6函数/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alphadzl.github.io" target="_blank">AlphaDZL的主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/alphadzl/tags/JS/">JS</a></div><div class="post_share"><div class="social-share" data-image="/alphadzl/img/default_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="onerror=null;src='/alphadzl/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS笔记7 运算符</div></div></a></div><div class="next-post pull-right"><a href="/alphadzl/2023/04/18/JS/JS%E7%AC%94%E8%AE%B05%E6%95%B0%E7%BB%84/" title="JS笔记5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="onerror=null;src='/alphadzl/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS笔记5 数组</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/alphadzl/2023/04/14/JS/JS%E7%AC%94%E8%AE%B01%E6%A6%82%E8%BF%B0&%E8%AF%AD%E6%B3%95/" title="JS笔记1 概述&amp;语法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-14</div><div class="title">JS笔记1 概述&amp;语法</div></div></a></div><div><a href="/alphadzl/2023/04/16/JS/JS%E7%AC%94%E8%AE%B03%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/" title="JS笔记3 对象的用法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-16</div><div class="title">JS笔记3 对象的用法</div></div></a></div><div><a href="/alphadzl/2023/04/15/JS/JS%E7%AC%94%E8%AE%B02%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS笔记2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-15</div><div class="title">JS笔记2 数据类型</div></div></a></div><div><a href="/alphadzl/2023/04/17/JS/JS%E7%AC%94%E8%AE%B04%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/" title="JS笔记4 对象分类"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-17</div><div class="title">JS笔记4 对象分类</div></div></a></div><div><a href="/alphadzl/2023/04/18/JS/JS%E7%AC%94%E8%AE%B05%E6%95%B0%E7%BB%84/" title="JS笔记5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-18</div><div class="title">JS笔记5 数组</div></div></a></div><div><a href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-20</div><div class="title">JS笔记7 运算符</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/avatar_img.jpg" onerror="this.onerror=null;this.src='/alphadzl/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">AlphaDZL</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/alphadzl/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/alphadzl/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/alphadzl/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AlphaDZL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlphaDZL" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2113128657@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #hdhfbb;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是AlphaDZL的个人微博</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">定义一个函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E5%90%8D%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">具名函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">匿名函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">箭头函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fn%E4%B8%8Efn"><span class="toc-number">2.1.</span> <span class="toc-text">fn与fn()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E8%A6%81%E7%B4%A0"><span class="toc-number">3.</span> <span class="toc-text">函数的要素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">调用时机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">3.2.</span> <span class="toc-text">作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%A7%84%E5%88%99"><span class="toc-number">3.2.1.</span> <span class="toc-text">作用域规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">3.2.2.</span> <span class="toc-text">闭包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E5%8F%82%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">形式参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.4.</span> <span class="toc-text">返回值</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E6%A0%88%EF%BC%8C%E9%80%92%E5%BD%92%E4%B8%8E%E7%88%86%E6%A0%88"><span class="toc-number">4.</span> <span class="toc-text">调用栈，递归与爆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8F%90%E5%8D%87"><span class="toc-number">5.</span> <span class="toc-text">函数提升</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#arguments%E5%92%8Cthis"><span class="toc-number">6.</span> <span class="toc-text">arguments和this</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BC%A0arguments"><span class="toc-number">6.1.</span> <span class="toc-text">如何传arguments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BC%A0this"><span class="toc-number">6.2.</span> <span class="toc-text">如何传this</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this%E6%98%AF%E5%8F%82%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">this是参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87call%E6%8C%87%E5%AE%9Athis%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">8.</span> <span class="toc-text">通过call指定this调用函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%91%E5%AE%9Athis"><span class="toc-number">9.</span> <span class="toc-text">绑定this</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-bind-%E5%8F%AF%E4%BB%A5%E8%AE%A9-this-%E4%B8%8D%E8%A2%AB%E6%94%B9%E5%8F%98"><span class="toc-number">9.1.</span> <span class="toc-text">使用 .bind 可以让 this 不被改变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bind-%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%BB%91%E5%AE%9A%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="toc-number">9.2.</span> <span class="toc-text">.bind 还可以绑定其他参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E6%B2%A1%E6%9C%89this%E5%92%8Carguments"><span class="toc-number">10.</span> <span class="toc-text">箭头函数没有this和arguments</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-number">11.</span> <span class="toc-text">立即执行函数</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B02%E5%B0%81%E8%A3%85DOM%E5%BA%93%20/" title="JS编程接口笔记2 对DOM库简单封装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS编程接口笔记2 对DOM库简单封装"/></a><div class="content"><a class="title" href="/alphadzl/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B02%E5%B0%81%E8%A3%85DOM%E5%BA%93%20/" title="JS编程接口笔记2 对DOM库简单封装">JS编程接口笔记2 对DOM库简单封装</a><time datetime="2023-05-09T13:14:01.000Z" title="发表于 2023-05-09 21:14:01">2023-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B01DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口笔记1 DOM编程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS编程接口笔记1 DOM编程"/></a><div class="content"><a class="title" href="/alphadzl/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B01DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口笔记1 DOM编程">JS编程接口笔记1 DOM编程</a><time datetime="2023-05-02T11:20:01.000Z" title="发表于 2023-05-02 19:20:01">2023-05-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/21/JS/JS%E7%AC%94%E8%AE%B08%E6%80%BB%E7%BB%93/" title="JS笔记8 总结"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记8 总结"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/21/JS/JS%E7%AC%94%E8%AE%B08%E6%80%BB%E7%BB%93/" title="JS笔记8 总结">JS笔记8 总结</a><time datetime="2023-04-21T01:33:01.000Z" title="发表于 2023-04-21 09:33:01">2023-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记7 运算符"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符">JS笔记7 运算符</a><time datetime="2023-04-20T01:33:01.000Z" title="发表于 2023-04-20 09:33:01">2023-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/" title="JS笔记6 函数"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记6 函数"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/" title="JS笔记6 函数">JS笔记6 函数</a><time datetime="2023-04-19T01:33:01.000Z" title="发表于 2023-04-19 09:33:01">2023-04-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By AlphaDZL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi ! Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/alphadzl/js/utils.js"></script><script src="/alphadzl/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.8.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="14,131,205" opacity="0.9" zIndex="-1" count="99" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script></div></body></html>

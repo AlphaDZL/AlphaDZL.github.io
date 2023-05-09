@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS笔记3 对象的用法 | AlphaDZL的主页</title><meta name="author" content="AlphaDZL"><meta name="copyright" content="AlphaDZL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="对象的写法，属性名，属性值，隐藏属性，属性的增删改查以及原型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS笔记3 对象的用法">
+<meta property="og:url" content="https://alphadzl.github.io/2023/04/16/JS/JS%E7%AC%94%E8%AE%B03%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="AlphaDZL的主页">
+<meta property="og:description" content="对象的写法，属性名，属性值，隐藏属性，属性的增删改查以及原型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alphadzl.github.io/img/default_cover.png">
+<meta property="article:published_time" content="2023-04-16T01:33:01.000Z">
+<meta property="article:modified_time" content="2023-05-09T13:18:09.199Z">
+<meta property="article:author" content="AlphaDZL">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alphadzl.github.io/img/default_cover.png"><link rel="shortcut icon" href="/alphadzl/img/favicon.svg"><link rel="canonical" href="https://alphadzl.github.io/2023/04/16/JS/JS%E7%AC%94%E8%AE%B03%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/alphadzl/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/alphadzl/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":1600},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS笔记3 对象的用法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-09 21:18:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/avatar_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/alphadzl/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/alphadzl/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/alphadzl/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/alphadzl/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/alphadzl/" title="AlphaDZL的主页"><span class="site-name">AlphaDZL的主页</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/alphadzl/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/alphadzl/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS笔记3 对象的用法<a class="post-edit-link" href="https://github.com/AlphaDZL/_posts/JS/JS笔记3对象的用法.md" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-16T01:33:01.000Z" title="发表于 2023-04-16 09:33:01">2023-04-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-09T13:18:09.199Z" title="更新于 2023-05-09 21:18:09">2023-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/alphadzl/categories/JS%E7%AC%94%E8%AE%B0/">JS笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span></div></div></div><article class="post-content" id="article-container"><h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>JS学习三座大山：对象，this，AJAX<br>object是唯一一种复杂类型<br>它是无序的数据集合，是键值对的集合</p>
+<p>读对象的属性时，如果使用 [ ] 语法，那么 JS 会先求 [ ] 中表达式的值，注意区分表达式是变量还是常量，如果使用点语法，那么点后面一定是string</p>
+<h1 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj1=&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;name1&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;<span class="comment">//简单写法</span></span><br><span class="line"><span class="keyword">let</span> obj2=<span class="keyword">new</span> <span class="title class_">Object</span>(&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;name1&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;)<span class="comment">//正规写法</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;name1&#x27;</span>,<span class="string">&#x27;age&#x27;</span>:<span class="number">18</span>&#125;)<span class="comment">//匿名对象</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：</p>
+<ol>
+<li>键名是字符串，不是标识符，可以包含任意字符（空字符串’’也可以作为键名）。</li>
+<li>键名的引号可以省略，但是省略之后只能按标识符的规则来写。另外，就算引号省略了，键名也还是字符串（特例：纯数字可以作为键名，当然实际上还是当做字符串）<br><code>var obj=&#123;2:&#39;name&#39;&#125; </code>其中2实际上是字符串</li>
+<li>直接打<code>&#123;&#39;name&#39;:&#39;name1&#39;&#125;</code>会报错，打<code>&#123;name:&#39;name1&#39;&#125;</code>不报错，会视为<code>&quot;name1&quot;</code>，不视为对象。（1:’name1’也会报错）<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/2023/04/16/JS/JS%E7%AC%94%E8%AE%B03%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/image-20230416132450327.png" alt="image-20230416132450327">（chrome不知为何视为对象，firefox不视为对象)</li>
+<li>没有数字键名，没有数字下标（看起来像数字键名和下标，实际上是字符串，如数组，arr[1]，其实是’1’）</li>
+</ol>
+<h1 id="属性名-amp-属性值"><a href="#属性名-amp-属性值" class="headerlink" title="属性名&amp;属性值"></a>属性名&amp;属性值</h1><p>每一个key都是对象的属性名，每个value都是对象的属性值。定义的时候属性之间必须用逗号,隔开。</p>
+<h2 id="奇怪的属性名"><a href="#奇怪的属性名" class="headerlink" title="奇怪的属性名"></a>奇怪的属性名</h2><p><strong>所有的属性名都会自动变成字符串</strong></p>
+<ol>
+<li>数字作为属性名<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数字作为属性名</span></span><br><span class="line"><span class="keyword">let</span> obj=&#123;</span><br><span class="line">    <span class="number">1</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">    <span class="number">3.2</span>:<span class="string">&#x27;3.2&#x27;</span>,</span><br><span class="line">    <span class="number">1e2</span>:<span class="string">&#x27;100&#x27;</span>,<span class="comment">//JS会先转化成数字,在变成字符串</span></span><br><span class="line">    <span class="number">1e-2</span>:<span class="string">&#x27;0.01&#x27;</span>,</span><br><span class="line">    <span class="number">.234</span>:<span class="string">&#x27;0.234&#x27;</span>,<span class="comment">//数字省略了0</span></span><br><span class="line">    <span class="number">0xFF</span>:<span class="string">&#x27;255&#x27;</span><span class="comment">//0x自动转化成了16进制数	</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 打出对象所有键名的函数：<br> <code>Object.keys(obj)</code>=&gt;<code>[ &quot;1&quot;, &quot;100&quot;, &quot;255&quot;, &quot;3.2&quot;, &quot;0.01&quot;, &quot;0.234&quot; ]</code><br> （键名的顺序并不一定按照定义的顺序来）</li>
+<li>变量作为属性名<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//变量作为属性名</span></span><br><span class="line"><span class="keyword">let</span> a=<span class="string">&#x27;xxx&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">    <span class="attr">a</span>:<span class="number">11111</span><span class="comment">//实际上键名是&quot;a&quot;</span></span><br><span class="line">    [a]:<span class="number">2222</span><span class="comment">//如果非要a当做变量的值处理的话,这样写</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 不加[]的属性名会自动变成字符串,加了[]则会被当做变量求值,如果值不是字符串,就会尝试变成字符串如<code>[1+2+3+4]</code>的键名是”10”<br> 键名不加引号可能会出现一些奇奇怪怪的现象,因此最好还是加上引号</li>
+<li>除了字符串，symbol也能做属性名。<br> 如<code>let a=Symbol();let obj=&#123;[a]:&#39;hello&#39;&#125;</code><br> 但是几乎没有用到</li>
+</ol>
+<h1 id="对象的隐藏属性"><a href="#对象的隐藏属性" class="headerlink" title="对象的隐藏属性"></a>对象的隐藏属性</h1><ol>
+<li>JS中每一个对象都有一个隐藏属性</li>
+<li>这个隐藏属性储存着其公有属性组成的对象的地址</li>
+<li>这个公有属性组成的对象叫做原型。也就是说，隐藏属性储存着原型的地址</li>
+</ol>
+<p>参考JS笔记1概述&amp;语法 原型链prototype<br>公有属性作用：省内存，增加代码复用</p>
+<h1 id="属性的增删改查"><a href="#属性的增删改查" class="headerlink" title="属性的增删改查"></a>属性的增删改查</h1><h2 id="删除属性"><a href="#删除属性" class="headerlink" title="删除属性"></a>删除属性</h2><p><code>delete obj.xxx</code>或<code>delete obj[&#39;xxx&#39;]</code><br>即可删除obj的xxx属性，注意区分「属性值为undefined」和「不含属性名」（ps：删完了会返回一个true，即使xxx不在obj中，<code>delete obj.xxx</code>也不会报错,并返回一个true）</p>
+<p>对象不含属性名<br><code>&#39;xxx&#39;in obj ==false</code><br>含有属性名，但是值为undefined<br><code>&#39;xxx&#39;in obj &amp;&amp; obj.xxx ==undefined</code></p>
+<p>注意：</p>
+<ol>
+<li>obj.xxx==undefined不能断定xxx是否为obj的属性</li>
+<li>obj.xxx=undefined并没有删除xxx属性，而是把xxx属性设为了空值。</li>
+<li>delete是用来删除属性的方法。删其他的东西请使用其他方法</li>
+</ol>
+<h2 id="查看属性"><a href="#查看属性" class="headerlink" title="查看属性"></a>查看属性</h2><p>两种方法查看属性</p>
+<ol>
+<li>中括号语法：obj[‘key’]</li>
+<li>点语法：obj.key</li>
+<li>坑新人语法：obj[key]∥变量key值一般不为’key’</li>
+</ol>
+<p>不是老手的话，优先使用中括号语法<br><strong><code>obj.name等价于obj[&#39;name&#39;]</code></strong><br><strong><code>obj.name不等于obj[name]</code></strong><br>除非<strong>变量</strong>name的值等于<strong>字符串</strong>‘name’</p>
+<p>let name=’张三’<br><strong><code>obj[name]</code><strong>等价于</strong><code>obj[&#39;张三&#39;]</code></strong>,而不是obj[‘name’]或者obj.name</p>
+<p><strong>查看键名和键值</strong></p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查看自身所有属性名</td>
+<td><code>Object:keys(obj)</code></td>
+</tr>
+<tr>
+<td>查看自身所有键值</td>
+<td><code>Object:values(obj)</code></td>
+</tr>
+<tr>
+<td>查看自身+公有属性</td>
+<td><code>console.dir(obj)</code></td>
+</tr>
+<tr>
+<td>查看某个公有属性（不推荐用）</td>
+<td><code>obj.__proto__</code></td>
+</tr>
+<tr>
+<td>判断是否有一个属性</td>
+<td><code>&#39;toString&#39; in obj</code></td>
+</tr>
+<tr>
+<td>判断一个属性是自身还是公有的</td>
+<td><code>obj.hasOwnProperty(&#39;toString&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2 id="增加-amp-amp-修改属性"><a href="#增加-amp-amp-修改属性" class="headerlink" title="增加&amp;&amp;修改属性"></a>增加&amp;&amp;修改属性</h2><p>在JS中增加一个属性和修改一个属性，语法是差不多的，如果之前没有这个属性，那就是增加，如果之前有这个属性，那就是修改。</p>
+<h3 id="直接赋值"><a href="#直接赋值" class="headerlink" title="直接赋值"></a>直接赋值</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj=&#123;<span class="attr">name</span>:<span class="string">&#x27;张三&#x27;</span>&#125;	<span class="comment">//name是字符串</span></span><br><span class="line">obj.<span class="property">name</span> =<span class="string">&#x27;张三&#x27;</span>	<span class="comment">//相当于obj[&#x27;name&#x27;]</span></span><br><span class="line">obj[<span class="string">&#x27;name&#x27;</span>]=<span class="string">&#x27;李四&#x27;</span></span><br><span class="line">obj[name]=<span class="string">&quot;李四&quot;</span>	<span class="comment">//错，因name值不确定</span></span><br><span class="line">obj[<span class="string">&#x27;na&#x27;</span>+<span class="string">&#x27;me&#x27;</span>]=<span class="string">&#x27;张三&#x27;</span></span><br><span class="line"><span class="keyword">let</span> key=<span class="string">&#x27;name&#x27;</span>;obj[key]=<span class="string">&#x27;李四&#x27;</span></span><br><span class="line"><span class="keyword">let</span> key <span class="string">&#x27;name&#x27;</span>;obj.<span class="property">key</span>	<span class="comment">//错,因为obj.key等价于obj[&#x27;key&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">assign</span>(obj,&#123;<span class="attr">age</span>:<span class="number">18</span>,<span class="attr">gender</span>:<span class="string">&#x27;man&#x27;</span>&#125;)<span class="comment">//批量赋值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改或增加共有属性"><a href="#修改或增加共有属性" class="headerlink" title="修改或增加共有属性"></a>修改或增加共有属性</h3><p>（共有属性指的是原型的属性）</p>
+<p>obj.toString=’xxx’不会影响原型里的toString<br>因为JS读的时候会读到原型，但是写的时候无法通过自身修改或增加共有属性</p>
+<p>let obj=0,obj2=0//共有toString<br>obj.toString=’xxx’只会在改obj自身属性<br>obj2.toString还是在原型上</p>
+<p><strong>假如非要修改或增加原型上的属性</strong></p>
+<ol>
+<li>obj.__proto__[‘toString’]=’xxx’//不推荐用这种方式</li>
+<li>Object.prototype.[‘toString’]=’xxx’//非要修改的话，建议这种方式。</li>
+</ol>
+<p>一般来说，不要修改原型，会引起很多问题</p>
+<h3 id="修改隐藏属性"><a href="#修改隐藏属性" class="headerlink" title="修改隐藏属性"></a>修改隐藏属性</h3><p>（隐藏属性指的是，对象的存着原型地址的那个属性，__proto__）<br>如果将一个对象的隐藏属性修改为自定的对象的地址，但是那个自定对象也有个隐藏属性，存着最初原型的地址。因此就形成了一个对象指向自定对象，自定对象由指向了最初原型的一条原型链。同理还可以在原型链中插入任意个对象</p>
+<ol>
+<li>使用__proto__的方式<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj=&#123;<span class="attr">name</span>:<span class="string">&#x27;frank&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">let</span> obj2=&#123;<span class="attr">name</span>:<span class="string">&#x27;jack&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">let</span> common &#123;<span class="attr">kind</span>:<span class="string">&#x27;human&#x27;</span>&#125;</span><br><span class="line">obj.<span class="property">__proto__</span>=common</span><br><span class="line">obj2.<span class="property">__proto__</span>=common</span><br></pre></td></tr></table></figure>
+<strong>不推荐使用__proto__来修改隐藏属性</strong></li>
+<li>推荐使用Object.create在创建对象的时候就为其指定原型<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj=<span class="title class_">Object</span>.<span class="title function_">create</span>(common)</span><br><span class="line">obj.<span class="property">name</span>=<span class="string">&#x27;frank&#x27;</span></span><br><span class="line"><span class="keyword">let</span> obj2=object.<span class="title function_">create</span>(common)</span><br><span class="line">obj2.<span class="property">name</span>=<span class="string">&#x27;jack&#x27;</span></span><br></pre></td></tr></table></figure>
+规范大概的意思是，要改就一开始就改，别后来再改。（涉及到性能的问题）Object.create一般与批量赋值Object.assign()搭配使用</li>
+<li>所有使用__proto__的代码都是不推荐的，使用时查查有没有其他方法 </li>
+</ol>
+<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><ol>
+<li>每个对象都有原型</li>
+<li>原型里存着对象的共有属性</li>
+<li>原型也是一个对象<br>比如obj的原型就是一个对象，obj.__proto__存着这个对象的地址，这个对象里有toString/constructor/valueOf等属性</li>
+<li>对象的原型也是对象，所以对象的原型也有原型<br>obj={}的原型即为所有对象的原型，这个原型包含所有对象的共有属性，是对象的根，这个原型也有原型，是null（是null而不是underfined，说明是认为指定的null，__proto__ in obj.__proto__的值为true）</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/AlphaDZL">AlphaDZL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://alphadzl.github.io/2023/04/16/JS/JS%E7%AC%94%E8%AE%B03%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/">https://alphadzl.github.io/2023/04/16/JS/JS笔记3对象的用法/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alphadzl.github.io" target="_blank">AlphaDZL的主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/alphadzl/tags/JS/">JS</a></div><div class="post_share"><div class="social-share" data-image="/alphadzl/img/default_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/alphadzl/2023/04/17/JS/JS%E7%AC%94%E8%AE%B04%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/" title="JS笔记4 对象分类"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="onerror=null;src='/alphadzl/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS笔记4 对象分类</div></div></a></div><div class="next-post pull-right"><a href="/alphadzl/2023/04/15/JS/JS%E7%AC%94%E8%AE%B02%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS笔记2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="onerror=null;src='/alphadzl/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS笔记2 数据类型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/alphadzl/2023/04/14/JS/JS%E7%AC%94%E8%AE%B01%E6%A6%82%E8%BF%B0&%E8%AF%AD%E6%B3%95/" title="JS笔记1 概述&amp;语法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-14</div><div class="title">JS笔记1 概述&amp;语法</div></div></a></div><div><a href="/alphadzl/2023/04/15/JS/JS%E7%AC%94%E8%AE%B02%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS笔记2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-15</div><div class="title">JS笔记2 数据类型</div></div></a></div><div><a href="/alphadzl/2023/04/17/JS/JS%E7%AC%94%E8%AE%B04%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/" title="JS笔记4 对象分类"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-17</div><div class="title">JS笔记4 对象分类</div></div></a></div><div><a href="/alphadzl/2023/04/18/JS/JS%E7%AC%94%E8%AE%B05%E6%95%B0%E7%BB%84/" title="JS笔记5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-18</div><div class="title">JS笔记5 数组</div></div></a></div><div><a href="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/" title="JS笔记6 函数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-19</div><div class="title">JS笔记6 函数</div></div></a></div><div><a href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-20</div><div class="title">JS笔记7 运算符</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/avatar_img.jpg" onerror="this.onerror=null;this.src='/alphadzl/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">AlphaDZL</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/alphadzl/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/alphadzl/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/alphadzl/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AlphaDZL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlphaDZL" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2113128657@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #hdhfbb;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是AlphaDZL的个人微博</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">写法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%90%8D-amp-%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text">属性名&amp;属性值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%87%E6%80%AA%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D"><span class="toc-number">3.1.</span> <span class="toc-text">奇怪的属性名</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">对象的隐藏属性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">属性的增删改查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%B1%9E%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">删除属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">5.2.</span> <span class="toc-text">查看属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0-amp-amp-%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7"><span class="toc-number">5.3.</span> <span class="toc-text">增加&amp;&amp;修改属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%B5%8B%E5%80%BC"><span class="toc-number">5.3.1.</span> <span class="toc-text">直接赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%88%96%E5%A2%9E%E5%8A%A0%E5%85%B1%E6%9C%89%E5%B1%9E%E6%80%A7"><span class="toc-number">5.3.2.</span> <span class="toc-text">修改或增加共有属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="toc-number">5.3.3.</span> <span class="toc-text">修改隐藏属性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B"><span class="toc-number">6.</span> <span class="toc-text">原型</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B02%E5%B0%81%E8%A3%85DOM%E5%BA%93%20/" title="JS编程接口笔记2 对DOM库简单封装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS编程接口笔记2 对DOM库简单封装"/></a><div class="content"><a class="title" href="/alphadzl/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B02%E5%B0%81%E8%A3%85DOM%E5%BA%93%20/" title="JS编程接口笔记2 对DOM库简单封装">JS编程接口笔记2 对DOM库简单封装</a><time datetime="2023-05-09T13:14:01.000Z" title="发表于 2023-05-09 21:14:01">2023-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B01DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口笔记1 DOM编程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS编程接口笔记1 DOM编程"/></a><div class="content"><a class="title" href="/alphadzl/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%AC%94%E8%AE%B01DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口笔记1 DOM编程">JS编程接口笔记1 DOM编程</a><time datetime="2023-05-02T11:20:01.000Z" title="发表于 2023-05-02 19:20:01">2023-05-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/21/JS/JS%E7%AC%94%E8%AE%B08%E6%80%BB%E7%BB%93/" title="JS笔记8 总结"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记8 总结"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/21/JS/JS%E7%AC%94%E8%AE%B08%E6%80%BB%E7%BB%93/" title="JS笔记8 总结">JS笔记8 总结</a><time datetime="2023-04-21T01:33:01.000Z" title="发表于 2023-04-21 09:33:01">2023-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记7 运算符"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/20/JS/JS%E7%AC%94%E8%AE%B07%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS笔记7 运算符">JS笔记7 运算符</a><time datetime="2023-04-20T01:33:01.000Z" title="发表于 2023-04-20 09:33:01">2023-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/" title="JS笔记6 函数"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/alphadzl/img/default_cover.png" onerror="this.onerror=null;this.src='/alphadzl/img/404.jpg'" alt="JS笔记6 函数"/></a><div class="content"><a class="title" href="/alphadzl/2023/04/19/JS/JS%E7%AC%94%E8%AE%B06%E5%87%BD%E6%95%B0/" title="JS笔记6 函数">JS笔记6 函数</a><time datetime="2023-04-19T01:33:01.000Z" title="发表于 2023-04-19 09:33:01">2023-04-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By AlphaDZL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi ! Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/alphadzl/js/utils.js"></script><script src="/alphadzl/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.8.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="14,131,205" opacity="0.9" zIndex="-1" count="99" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script></div></body></html>
