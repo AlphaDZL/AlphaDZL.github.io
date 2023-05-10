@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS基础4 对象分类 | AlphaDZL的主页</title><meta name="author" content="AlphaDZL"><meta name="copyright" content="AlphaDZL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="构造函数、原型与共用属性的关系、数组对象、函数对象、Class语法、代码规范、代码示例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS基础4 对象分类">
+<meta property="og:url" content="https://alphadzl.github.io/2023/04/17/JS/JS%E5%9F%BA%E7%A1%804%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="AlphaDZL的主页">
+<meta property="og:description" content="构造函数、原型与共用属性的关系、数组对象、函数对象、Class语法、代码规范、代码示例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alphadzl.github.io/img/default_cover.png">
+<meta property="article:published_time" content="2023-04-17T01:33:01.000Z">
+<meta property="article:modified_time" content="2023-05-10T02:25:30.182Z">
+<meta property="article:author" content="AlphaDZL">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alphadzl.github.io/img/default_cover.png"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://alphadzl.github.io/2023/04/17/JS/JS%E5%9F%BA%E7%A1%804%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":1600},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS基础4 对象分类',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-10 10:25:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AlphaDZL的主页"><span class="site-name">AlphaDZL的主页</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS基础4 对象分类<a class="post-edit-link" href="https://github.com/AlphaDZL/_posts/JS/JS基础4对象分类.md" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-17T01:33:01.000Z" title="发表于 2023-04-17 09:33:01">2023-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-10T02:25:30.182Z" title="更新于 2023-05-10 10:25:30">2023-05-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JS%E7%AC%94%E8%AE%B0/">JS笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">772</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span></div></div></div><article class="post-content" id="article-container"><h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><h2 id="如果不通过new"><a href="#如果不通过new" class="headerlink" title="如果不通过new"></a>如果不通过new</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createSquare</span>(<span class="params">width</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> obj = <span class="title class_">Object</span>.<span class="title function_">create</span>(createSquare.<span class="property">squarePrototype</span>)</span><br><span class="line">  obj.<span class="property">width</span> = width</span><br><span class="line">  <span class="keyword">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line">createSquare.<span class="property">squarePrototype</span> = &#123;</span><br><span class="line">  <span class="title function_">getArea</span>(<span class="params"></span>)&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">width</span> </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">getLength</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="number">4</span></span><br><span class="line">  &#125;，</span><br><span class="line">  <span class="attr">constructor</span>: createSquare </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> square = <span class="title function_">createSquare</span>(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>(<a href="#%E6%B3%A8%E6%84%8F">注意点1</a>)</p>
+<h2 id="使用new操作符"><a href="#使用new操作符" class="headerlink" title="使用new操作符"></a>使用new操作符</h2><p>（约定俗成首字母大写,说明是用来构造对象的）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Square</span>(<span class="params">width</span>)&#123; </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">width</span> = width</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Square</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getArea</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; </span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">width</span> </span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Square</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getLength</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> square = <span class="keyword">new</span> <span class="title class_">Square</span>(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p><a href="#%E6%B3%A8%E6%84%8F">注意点2</a></p>
+<h2 id="new-X-做的事情"><a href="#new-X-做的事情" class="headerlink" title="new X()做的事情"></a><strong>new X()做的事情</strong></h2><ol>
+<li>自动创建空对象</li>
+<li><strong>自动为空对象关联原型，原型地址指定为 X.prototype</strong> （<a href="#%E6%B3%A8%E6%84%8F">注意点</a>）</li>
+<li>自动将空对象作为 this 关键字运行构造函数</li>
+<li>自动 return this</li>
+</ol>
+<h2 id="构造函数X"><a href="#构造函数X" class="headerlink" title="构造函数X"></a>构造函数X</h2><ol>
+<li>X函数本身负责给对象本身添加属性</li>
+<li>X.prototype 对象负责保存对象的共用属性</li>
+</ol>
+<h1 id="原型与共用属性的关系"><a href="#原型与共用属性的关系" class="headerlink" title="原型与共用属性的关系"></a>原型与共用属性的关系</h1><ol>
+<li>原型公式<br>对象.__proto__===其构造函数.prototype</li>
+<li>例外:<br>Object.prototype没有构造函数<br>Object.prototype.__proto__===null</li>
+<li>原型存的是共有属性的地址</li>
+</ol>
+<h1 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h1><h2 id="定义一个数组"><a href="#定义一个数组" class="headerlink" title="定义一个数组"></a>定义一个数组</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) <span class="comment">// 元素为 1,2,3let </span></span><br><span class="line">arr = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">3</span>) <span class="comment">// 长度为 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组对象的自身属性"><a href="#数组对象的自身属性" class="headerlink" title="数组对象的自身属性"></a>数组对象的自身属性</h2><p>‘0’ / ‘1’ / ‘2’ / ‘length’<br>注意，属性名没有数字，只有字符串</p>
+<h2 id="数组对象的共用属性"><a href="#数组对象的共用属性" class="headerlink" title="数组对象的共用属性"></a>数组对象的共用属性</h2><p>‘push’ / ‘pop’ / ‘shift’ / ‘unshift’ / ‘join’其实就是英语</p>
+<h1 id="函数对象"><a href="#函数对象" class="headerlink" title="函数对象"></a>函数对象</h1><h2 id="定义一个函数"><a href="#定义一个函数" class="headerlink" title="定义一个函数"></a>定义一个函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">x,y</span>)&#123;<span class="keyword">return</span> x+y&#125;</span><br><span class="line"><span class="keyword">let</span> fn2 = <span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">x,y</span>)&#123;<span class="keyword">return</span> x+y&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="title function_">fn</span> = (<span class="params">x,y</span>) =&gt; x+y</span><br><span class="line"><span class="keyword">let</span> fn = <span class="keyword">new</span> <span class="title class_">Function</span>(<span class="string">&#x27;x&#x27;</span>,<span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;return x+y&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="函数对象自身属性"><a href="#函数对象自身属性" class="headerlink" title="函数对象自身属性"></a>函数对象自身属性</h2><p><code>name</code> / <code>length</code></p>
+<h2 id="函数对象共用属性"><a href="#函数对象共用属性" class="headerlink" title="函数对象共用属性"></a>函数对象共用属性</h2><p><code>call</code> / <code>apply</code> / <code>bind</code>等</p>
+<h1 id="Class语法"><a href="#Class语法" class="headerlink" title="Class语法"></a>Class语法</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span>&#123;</span><br><span class="line">  <span class="keyword">static</span> x = <span class="number">1</span></span><br><span class="line">  width = <span class="number">0</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">width</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">width</span> = width</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="title function_">getArea</span>(<span class="params"></span>)&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">width</span> </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">getLength</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="number">4</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">area2</span>()&#123; <span class="comment">// 只读属性</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">width</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h1><ol>
+<li>大小写<br>所有构造函数首字母大写,所有被构造出来的函数首字母小写</li>
+<li>词性<br>new后面的函数使用名词形式，其他函数一般以动词开头<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Square</span>(<span class="params">width</span>)&#123; </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">width</span> = width</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Square</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getArea</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; </span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">width</span> </span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Square</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getLength</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> square = <span class="keyword">new</span> <span class="title class_">Square</span>(<span class="number">5</span>)</span><br><span class="line">square.<span class="property">width</span></span><br><span class="line">square.<span class="title function_">getArea</span>()</span><br><span class="line">square.<span class="title function_">getLength</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ol>
+<li>函数在写的时候并没有执行，因此写函数1时，先在函数1中调用一个还未被定义的函数2，并不会报错。只有在调用函数1的时候，如果函数1调用的函数2还未被加载到内存当中，才会报错</li>
+<li>JS中所有的函数，从它存在的时候就自带一个prototype的属性，prototype中有一个constructor属性，constructor的值是它自身。也就是说<code>function f1()&#123;&#125;;</code>,<code>f1.prototype.constructor===f1</code>的值为true</li>
+<li>new X()自动为空对象关联原型，将原型地址指定为 X.prototype。也是因此，当定义数组let arr=[1,2]，实际上是let arr=new Arrya(“1”,”2”)，因此arr的原型地址自动被指定为了Array.prototype，Object类型也是同理</li>
+<li>属性名与属性值是两个东西</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/AlphaDZL">AlphaDZL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://alphadzl.github.io/2023/04/17/JS/JS%E5%9F%BA%E7%A1%804%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/">https://alphadzl.github.io/2023/04/17/JS/JS基础4对象分类/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alphadzl.github.io" target="_blank">AlphaDZL的主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JS/">JS</a></div><div class="post_share"><div class="social-share" data-image="/img/default_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/18/JS/JS%E5%9F%BA%E7%A1%805%E6%95%B0%E7%BB%84/" title="JS基础5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS基础5 数组</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/16/JS/JS%E5%9F%BA%E7%A1%803%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/" title="JS基础3 对象的用法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS基础3 对象的用法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/14/JS/JS%E5%9F%BA%E7%A1%801%E6%A6%82%E8%BF%B0&%E8%AF%AD%E6%B3%95/" title="JS基础1 概述&amp;语法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-14</div><div class="title">JS基础1 概述&amp;语法</div></div></a></div><div><a href="/2023/04/15/JS/JS%E5%9F%BA%E7%A1%802%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS基础2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-15</div><div class="title">JS基础2 数据类型</div></div></a></div><div><a href="/2023/04/16/JS/JS%E5%9F%BA%E7%A1%803%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/" title="JS基础3 对象的用法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-16</div><div class="title">JS基础3 对象的用法</div></div></a></div><div><a href="/2023/04/18/JS/JS%E5%9F%BA%E7%A1%805%E6%95%B0%E7%BB%84/" title="JS基础5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-18</div><div class="title">JS基础5 数组</div></div></a></div><div><a href="/2023/04/19/JS/JS%E5%9F%BA%E7%A1%806%E5%87%BD%E6%95%B0/" title="JS基础6 函数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-19</div><div class="title">JS基础6 函数</div></div></a></div><div><a href="/2023/04/21/JS/JS%E5%9F%BA%E7%A1%808%E6%80%BB%E7%BB%93/" title="JS基础8 总结"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-21</div><div class="title">JS基础8 总结</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar_img.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">AlphaDZL</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AlphaDZL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlphaDZL" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2113128657@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #hdhfbb;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是AlphaDZL的个人微博</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%80%9A%E8%BF%87new"><span class="toc-number">1.1.</span> <span class="toc-text">如果不通过new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8new%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">使用new操作符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new-X-%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85"><span class="toc-number">1.3.</span> <span class="toc-text">new X()做的事情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0X"><span class="toc-number">1.4.</span> <span class="toc-text">构造函数X</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%85%B1%E7%94%A8%E5%B1%9E%E6%80%A7%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">原型与共用属性的关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text">数组对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84"><span class="toc-number">3.1.</span> <span class="toc-text">定义一个数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%87%AA%E8%BA%AB%E5%B1%9E%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">数组对象的自身属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B1%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">3.3.</span> <span class="toc-text">数组对象的共用属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.</span> <span class="toc-text">函数对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">定义一个函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E8%87%AA%E8%BA%AB%E5%B1%9E%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">函数对象自身属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%85%B1%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">4.3.</span> <span class="toc-text">函数对象共用属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Class%E8%AF%AD%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">Class语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="toc-number">6.</span> <span class="toc-text">代码规范</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="toc-number">7.</span> <span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">8.</span> <span class="toc-text">注意</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A32%E5%B0%81%E8%A3%85DOM%E5%BA%93/" title="JS编程接口2 对DOM库简单封装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS编程接口2 对DOM库简单封装"/></a><div class="content"><a class="title" href="/2023/05/09/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A32%E5%B0%81%E8%A3%85DOM%E5%BA%93/" title="JS编程接口2 对DOM库简单封装">JS编程接口2 对DOM库简单封装</a><time datetime="2023-05-09T13:14:01.000Z" title="发表于 2023-05-09 21:14:01">2023-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A31DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口1 DOM编程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS编程接口1 DOM编程"/></a><div class="content"><a class="title" href="/2023/05/02/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A31DOM%E7%BC%96%E7%A8%8B/" title="JS编程接口1 DOM编程">JS编程接口1 DOM编程</a><time datetime="2023-05-02T11:20:01.000Z" title="发表于 2023-05-02 19:20:01">2023-05-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/21/JS/JS%E5%9F%BA%E7%A1%808%E6%80%BB%E7%BB%93/" title="JS基础8 总结"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS基础8 总结"/></a><div class="content"><a class="title" href="/2023/04/21/JS/JS%E5%9F%BA%E7%A1%808%E6%80%BB%E7%BB%93/" title="JS基础8 总结">JS基础8 总结</a><time datetime="2023-04-21T01:33:01.000Z" title="发表于 2023-04-21 09:33:01">2023-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/20/JS/JS%E5%9F%BA%E7%A1%807%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS基础7 运算符"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS基础7 运算符"/></a><div class="content"><a class="title" href="/2023/04/20/JS/JS%E5%9F%BA%E7%A1%807%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS基础7 运算符">JS基础7 运算符</a><time datetime="2023-04-20T01:33:01.000Z" title="发表于 2023-04-20 09:33:01">2023-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/19/JS/JS%E5%9F%BA%E7%A1%806%E5%87%BD%E6%95%B0/" title="JS基础6 函数"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS基础6 函数"/></a><div class="content"><a class="title" href="/2023/04/19/JS/JS%E5%9F%BA%E7%A1%806%E5%87%BD%E6%95%B0/" title="JS基础6 函数">JS基础6 函数</a><time datetime="2023-04-19T01:33:01.000Z" title="发表于 2023-04-19 09:33:01">2023-04-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By AlphaDZL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi ! Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.8.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="14,131,205" opacity="0.9" zIndex="-1" count="99" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script></div></body></html>
