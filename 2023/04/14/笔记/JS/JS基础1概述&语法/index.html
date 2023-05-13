@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS基础1 概述&amp;语法 | AlphaDZL的主页</title><meta name="author" content="AlphaDZL"><meta name="copyright" content="AlphaDZL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JS基础知识，条件语句，循环语句，易错点，prototype原型链，canvas。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS基础1 概述&amp;语法">
+<meta property="og:url" content="https://alphadzl.github.io/2023/04/14/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%801%E6%A6%82%E8%BF%B0&%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="AlphaDZL的主页">
+<meta property="og:description" content="JS基础知识，条件语句，循环语句，易错点，prototype原型链，canvas。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alphadzl.github.io/img/default_cover.png">
+<meta property="article:published_time" content="2023-04-14T14:16:01.000Z">
+<meta property="article:modified_time" content="2023-05-10T02:25:10.598Z">
+<meta property="article:author" content="AlphaDZL">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alphadzl.github.io/img/default_cover.png"><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://alphadzl.github.io/2023/04/14/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%801%E6%A6%82%E8%BF%B0&amp;%E8%AF%AD%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":1600},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS基础1 概述&语法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-10 10:25:10'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AlphaDZL的主页"><span class="site-name">AlphaDZL的主页</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS基础1 概述&amp;语法<a class="post-edit-link" href="https://github.com/AlphaDZL/_posts/笔记/JS/JS基础1概述&amp;语法.md" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-14T14:16:01.000Z" title="发表于 2023-04-14 22:16:01">2023-04-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-10T02:25:10.598Z" title="更新于 2023-05-10 10:25:10">2023-05-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JS%E7%AC%94%E8%AE%B0/">JS笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span></div></div></div><article class="post-content" id="article-container"><h1 id="JS基础知识"><a href="#JS基础知识" class="headerlink" title="JS基础知识"></a>JS基础知识</h1><h2 id="浏览器浏览页面的过程"><a href="#浏览器浏览页面的过程" class="headerlink" title="浏览器浏览页面的过程"></a>浏览器浏览页面的过程</h2><p>浏览器的功能：下载HTML，解析HTML，下载CSS，解析CSS，渲染界面，下载JS，解析JS，执行JS。</p>
+<p>功能模块：用户界面、渲染引擎、JS引擎、存储等。</p>
+<p>一个浏览器会产生多个进程，一个进程会产生多个线程，而这些功能模块一般各处于不同的线程当中。</p>
+<p>当浏览器打开一个页面时，会开启一个进程，包括了一个渲染引擎线程，一个JS引擎线程。</p>
+<p>JS是单线程的，JS改变渲染效果是通过跨线程通信来实现的。</p>
+<h2 id="栈和堆内存分配"><a href="#栈和堆内存分配" class="headerlink" title="栈和堆内存分配"></a>栈和堆内存分配</h2><p>栈Stack和堆Heap用来存数据，变量名单独存一个区。</p>
+<p>Stack区特点：每个数据顺序存放。</p>
+<p>Heap区特点：每个数据随机存放。</p>
+<p>JS里每个数字占64位。</p>
+<p>JS不是对象的有：数字，字符串，布尔，其他都是对象，如数组、函数。</p>
+<p>非对象存在Stack，对象都存在Heap。</p>
+<p>当声明一个变量，并赋值一个对象时，变量名存在变量名区，对象存在Heap区，然后变量名对应的Stack区存的是对象在Heap中的地址。（当赋值的是一个非对象时，变量名对应的Stack区存的是非对象的值，是一个数据。）</p>
+<p>=号就是直接复制，右边指向的是地址，就复制地址，右边指向的是数据，就复制数据（所以并没有传值和传址之分）。</p>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><p>window变量和window对象是两个东西，window变量是一个容器，存放了window对象的地址，window对象是堆Heap里的一堆数据。</p>
+<p>如果定义var a = window，那么a将起到和window变量一样的作用。（但是最好不要这么做，因为会混淆）</p>
+<p>同理console和console对象也是不同的。（console是window对象里的一个属性）</p>
+<h1 id="prototype原型链"><a href="#prototype原型链" class="headerlink" title="prototype原型链"></a>prototype原型链</h1><p>JS初始就在内存里存放了window.object.prototype对象和window.array.prototype对象。</p>
+<p>var bj={}; obj.toString();</p>
+<p>上述代码并不会报错，因为定义一个object对象时，其在Heap中的区域会包含一个隐藏属性，存的是window.object.prototype的地址。当obj.toString()发现在obj中没有toString()时，就会去隐藏属性中找。prototype中包含了toString()，因此name调用toString()就会调用prototype中的toString()，而不会报错。</p>
+<p>注：如果写上 name.toString()=”xxxx”;并不会影响 var c={};c.toString();的效果，因为name.toString()=”xxxx”会在name的Heap区中产生一个toString(),并不会越级影响到prototype中的toString。除非直接修改window.object.prototype.toString() 。</p>
+<p>所以，prototype里存的是所有普通对象所通用的共同属性。方便复用共有属性。</p>
+<p>注：每个对象都有一个隐藏属性，指向原型。</p>
+<p>我们此处只关心小写字母对象的隐藏属性，不展开了解大写首字母对象的隐藏属性（因为较复杂）。</p>
+<p>与上同理，数组对象也可直接调用arr.join(‘-‘)而不报错。</p>
+<h1 id="canvas"><a href="#canvas" class="headerlink" title="canvas"></a>canvas</h1><p>canvas标签有点类似于image标签，具有HTML意义上的宽高属性，canvas的宽高在一开始定义的时就已经确定了，在CSS中再去指定它的宽高，实际上是缩放，可能会导致图像模糊。（应该在JS中使用canvas对象.width=n px的方式来修改）（注：vh和vw是CSS单位，HTML没有这个单位）</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>表达式，语句，值，返回值的区别。</p>
+<p>语句是可以单独执行的、能够产生实际效果的代码；而表达式则是包含在语句中，根据某种条件计算出一个值或得出某种结果，然后由语句去判断和处理的代码。</p>
+<p>表达式有值，而语句的值是undefined或者返回值。</p>
+<p>语句有：声明式语句，赋值语句，执行式语句（使用整个语句块来执行某个动作，如条件语句，循环语句）。</p>
+<p>JS中是区分大小写的。</p>
+<p>大部分空格是没有实际意义的，只要不影响断句。</p>
+<p>回车也是一样。（例外：return后面加回车会改变原意，return后面加回车，会自动补充一个undefined）</p>
+<p>变量名的第一个字符不能是数字，其他基本都可以（甚至是希腊字母）。</p>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><h3 id="if-else语法："><a href="#if-else语法：" class="headerlink" title="if else语法："></a>if else语法：</h3><p>if(表达式){语句一}else{语句二}</p>
+<p>与其他语言基本一致。JS中实际上没有行的概念，例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">a=<span class="number">1</span></span><br><span class="line"><span class="keyword">if</span>(a===<span class="number">2</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a=2&#x27;</span>) <span class="comment">//这句没包括在if里</span></span><br><span class="line"><span class="keyword">if</span>(a===<span class="number">2</span>)</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>),<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a=2&#x27;</span>)<span class="comment">//两句都在if里</span></span><br><span class="line"><span class="keyword">if</span>(a===<span class="number">2</span>)</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>);<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a=2&#x27;</span>)<span class="comment">//第二句没在if里</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="switch-case语法"><a href="#switch-case语法" class="headerlink" title="switch case语法"></a>switch case语法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(a)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:a++;<span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        a--</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">        a=<span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="问号冒号表达式"><a href="#问号冒号表达式" class="headerlink" title="问号冒号表达式"></a>问号冒号表达式</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> max= a&gt;b?<span class="attr">a</span>:b</span><br></pre></td></tr></table></figure>
+
+<p>经常用于简化那些if里只有一个语句，else里也只有一个语句的情况。比如</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">max</span>(<span class="params">a,b</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> a&gt;b ? <span class="attr">a</span>: b</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">abs</span>(<span class="params">c</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> c&gt;<span class="number">0</span>? <span class="attr">c</span>:-c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="amp-amp-短路逻辑"><a href="#amp-amp-短路逻辑" class="headerlink" title="&amp;&amp;短路逻辑"></a>&amp;&amp;短路逻辑</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">f1</span>)&#123; <span class="comment">//如果window中存在f1则为true。直接写if(f1)会报错，因为f1还未定义，但window.f1却不报错（JS奇怪特点）</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;f1存在&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">f1</span> &amp;&amp; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;f1存在&#x27;</span>)</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<p>如果&amp;&amp;前面的为真值，那JS就会执行后面的代码。</p>
+<p>如果&amp;&amp;前面的为假，JS就不执行后面的代码。</p>
+<p>拓展：A &amp;&amp; B &amp;&amp; C</p>
+<h3 id="逻辑"><a href="#逻辑" class="headerlink" title="||逻辑"></a>||逻辑</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">A||B</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="keyword">if</span>(!A)&#123;</span><br><span class="line">    B</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A为真值，则不执行后面代码。</p>
+<p>A为假，则执行后面的。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//常见用法</span></span><br><span class="line">a= a||<span class="number">100</span></span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="keyword">if</span>(a)&#123;<span class="comment">//当然，得先声明a</span></span><br><span class="line">    a=a</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    a=<span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拓展：A||B||C||D 取第一个真值或者D</p>
+<h3 id="总结条件语句"><a href="#总结条件语句" class="headerlink" title="总结条件语句"></a><strong>总结</strong>条件语句</h3><ol>
+<li><p>if else 最常用，但是代码简短的时候，还是简写最好。</p>
+</li>
+<li><p>switch 结构简单，但要用的话，一定不要少了break</p>
+</li>
+<li><p>A?B:C 非常常用 </p>
+</li>
+<li><p>A&amp;&amp;B 非常常用（ 如fn&amp;&amp;fn() 如果fn存在则调用fn() ）</p>
+</li>
+<li><p>A||B 也很常用（ 如A=A||B 如果A存在则A等于B）</p>
+</li>
+</ol>
+<h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><h3 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h3><p>还是for循环更常用。</p>
+<p>语法：while(表达式){语句}</p>
+<ol>
+<li>当表达式为真时，执行后面的语句。</li>
+<li>执行完毕后再次回来判断表达式真假。</li>
+<li>当为假时，跳出while循环。</li>
+</ol>
+<p>其他还有do while循环。</p>
+<p>while(true){}死循环。</p>
+<p>while循环的基本过程为：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">a=<span class="number">1</span>	<span class="comment">//初始化</span></span><br><span class="line"><span class="keyword">while</span>(a&lt;<span class="number">5</span>)&#123;	<span class="comment">//判断</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a)	<span class="comment">//循环体</span></span><br><span class="line">    a++ 	<span class="comment">//增长</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><p>for(语句1;表达式2;语句3){循环体}</p>
+<ol>
+<li>先执行语句1(初始化)。</li>
+<li>然后判断表达式2。</li>
+<li>如果为真,执行循环体。</li>
+<li><strong>循环体之后执行语句3。</strong></li>
+<li>然后再判断表达式。</li>
+<li>如果为假,退出for循环。</li>
+</ol>
+<p>for循环如果不写中间的判断条件表达式2的话，就会进入死循环。</p>
+<p>for/in循环<br>遍历对象的属性</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> person=&#123;<span class="attr">fname</span>:<span class="string">&quot;Bill&quot;</span>,<span class="attr">lname</span>:<span class="string">&quot;Gates&quot;</span>,<span class="attr">age</span>:<span class="number">56</span>&#125;; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> (x <span class="keyword">in</span> person)  <span class="comment">// x 为属性名</span></span><br><span class="line">&#123;</span><br><span class="line">    txt=txt + person[x];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历伪数组时需要注意一下，会遍历到length这个属性。最好先把伪数组转化为数组再使用for/in循环</p>
+<h3 id="break和continue"><a href="#break和continue" class="headerlink" title="break和continue"></a>break和continue</h3><p>break跳出当前最近的循环。</p>
+<p>continue跳过此次循环。</p>
+<p>label语法(毫无意义,但是面试5%概率可能会考)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">foo</span>:&#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">break</span> foo;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;这行不会输出&#x27;</span>)<span class="comment">//break foo跳出了标签foo</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JS易错点"><a href="#JS易错点" class="headerlink" title="JS易错点"></a>JS易错点</h1><ol>
+<li><p>```JS<br>a=0.1<br>while(a!==1){</p>
+<pre><code>console.log(a)
+a=a+0.1
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">   注意,实际上这可能是个死循环,因为a是一个浮点类型的数,每次+0.1,可能最后到1.000001并不与1正好匹配,然后就走不出循环了。</span><br><span class="line">   </span><br><span class="line">2. ```JS</span><br><span class="line">   for(var i=0;i&lt;5;i++)&#123;</span><br><span class="line">       setTimeout(()=&gt;&#123;</span><br><span class="line">           console.log(i)</span><br><span class="line">       &#125;,0)</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处会打印出5个5,因为setTimeout是过一会再执行某个动作,for循环执行完毕后i=5。</p>
+<p>但是</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i)</span><br><span class="line">    &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处会打印出01234,因为JS中for循环对let类型会进行特殊的处理。</p>
+</li>
+<li><pre><code class="JS"> &#123;
+    a:1
+ &#125;
+</code></pre>
+<p> 这行代码的意思是a是一个label，它的语句是1。</p>
+</li>
+</ol>
+<h1 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h1><ol>
+<li><code>const &#123;childNodes&#125;=node</code>等价于<code>const childNodes=node.childNodes</code></li>
+</ol>
+<h1 id="程序员戒律"><a href="#程序员戒律" class="headerlink" title="程序员戒律"></a>程序员戒律</h1><ol>
+<li><p>优先怀疑自己哪里写错了。不要对自己绝对自信。</p>
+</li>
+<li><p>使用最推荐的，没有歧义的写法</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/AlphaDZL">AlphaDZL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://alphadzl.github.io/2023/04/14/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%801%E6%A6%82%E8%BF%B0&amp;%E8%AF%AD%E6%B3%95/">https://alphadzl.github.io/2023/04/14/笔记/JS/JS基础1概述&amp;语法/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://alphadzl.github.io" target="_blank">AlphaDZL的主页</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JS/">JS</a></div><div class="post_share"><div class="social-share" data-image="/img/default_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/15/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%802%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS基础2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS基础2 数据类型</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/06/%E7%AC%94%E8%AE%B0/CSS/CSS%E5%9F%BA%E7%A1%804/" title="CSS基础4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CSS基础4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/16/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%803%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%A8%E6%B3%95/" title="JS基础3 对象的用法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-16</div><div class="title">JS基础3 对象的用法</div></div></a></div><div><a href="/2023/04/18/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%805%E6%95%B0%E7%BB%84/" title="JS基础5 数组"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-18</div><div class="title">JS基础5 数组</div></div></a></div><div><a href="/2023/04/15/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%802%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JS基础2 数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-15</div><div class="title">JS基础2 数据类型</div></div></a></div><div><a href="/2023/04/17/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%804%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB/" title="JS基础4 对象分类"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-17</div><div class="title">JS基础4 对象分类</div></div></a></div><div><a href="/2023/04/20/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%807%E8%BF%90%E7%AE%97%E7%AC%A6/" title="JS基础7 运算符"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-20</div><div class="title">JS基础7 运算符</div></div></a></div><div><a href="/2023/04/21/%E7%AC%94%E8%AE%B0/JS/JS%E5%9F%BA%E7%A1%808%E6%80%BB%E7%BB%93/" title="JS基础8 总结"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-21</div><div class="title">JS基础8 总结</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar_img.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">AlphaDZL</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AlphaDZL"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AlphaDZL" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2113128657@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #hdhfbb;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是AlphaDZL的个人微博</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">JS基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B5%8F%E8%A7%88%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">浏览器浏览页面的过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E5%92%8C%E5%A0%86%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.2.</span> <span class="toc-text">栈和堆内存分配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%86%E8%8A%82"><span class="toc-number">1.3.</span> <span class="toc-text">细节</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#prototype%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-number">2.</span> <span class="toc-text">prototype原型链</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#canvas"><span class="toc-number">3.</span> <span class="toc-text">canvas</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.1.</span> <span class="toc-text">条件语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-else%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="toc-number">4.1.1.</span> <span class="toc-text">if else语法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#switch-case%E8%AF%AD%E6%B3%95"><span class="toc-number">4.1.2.</span> <span class="toc-text">switch case语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E5%8F%B7%E5%86%92%E5%8F%B7%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">4.1.3.</span> <span class="toc-text">问号冒号表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#amp-amp-%E7%9F%AD%E8%B7%AF%E9%80%BB%E8%BE%91"><span class="toc-number">4.1.4.</span> <span class="toc-text">&amp;&amp;短路逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91"><span class="toc-number">4.1.5.</span> <span class="toc-text">||逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.1.6.</span> <span class="toc-text">总结条件语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.2.</span> <span class="toc-text">循环语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#while%E5%BE%AA%E7%8E%AF"><span class="toc-number">4.2.1.</span> <span class="toc-text">while循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for%E5%BE%AA%E7%8E%AF"><span class="toc-number">4.2.2.</span> <span class="toc-text">for循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#break%E5%92%8Ccontinue"><span class="toc-number">4.2.3.</span> <span class="toc-text">break和continue</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JS%E6%98%93%E9%94%99%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">JS易错点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%82"><span class="toc-number">6.</span> <span class="toc-text">杂</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%91%98%E6%88%92%E5%BE%8B"><span class="toc-number">7.</span> <span class="toc-text">程序员戒律</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/13/Web/%E8%87%AA%E5%88%B6%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99/" title="自制导航网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自制导航网站"/></a><div class="content"><a class="title" href="/2023/05/13/Web/%E8%87%AA%E5%88%B6%E5%AF%BC%E8%88%AA%E7%BD%91%E7%AB%99/" title="自制导航网站">自制导航网站</a><time datetime="2023-05-13T14:15:20.000Z" title="发表于 2023-05-13 22:15:20">2023-05-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/11/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%95%E9%A2%98/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%955.11/" title="每日算法题 5.10"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="每日算法题 5.10"/></a><div class="content"><a class="title" href="/2023/05/11/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%95%E9%A2%98/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%955.11/" title="每日算法题 5.10">每日算法题 5.10</a><time datetime="2023-05-11T13:22:40.000Z" title="发表于 2023-05-11 21:22:40">2023-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/10/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%95%E9%A2%98/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%955.10/" title="每日算法题 5.10"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="每日算法题 5.10"/></a><div class="content"><a class="title" href="/2023/05/10/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%95%E9%A2%98/%E6%AF%8F%E6%97%A5%E7%AE%97%E6%B3%955.10/" title="每日算法题 5.10">每日算法题 5.10</a><time datetime="2023-05-10T07:33:01.000Z" title="发表于 2023-05-10 15:33:01">2023-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/10/%E7%AC%94%E8%AE%B0/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A33jQuery%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="JS编程接口3 jQuery设计模式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS编程接口3 jQuery设计模式"/></a><div class="content"><a class="title" href="/2023/05/10/%E7%AC%94%E8%AE%B0/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A33jQuery%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="JS编程接口3 jQuery设计模式">JS编程接口3 jQuery设计模式</a><time datetime="2023-05-10T01:33:01.000Z" title="发表于 2023-05-10 09:33:01">2023-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/09/%E7%AC%94%E8%AE%B0/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A32%E5%B0%81%E8%A3%85DOM%E5%BA%93/" title="JS编程接口2 对DOM库简单封装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS编程接口2 对DOM库简单封装"/></a><div class="content"><a class="title" href="/2023/05/09/%E7%AC%94%E8%AE%B0/JS/JS%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A32%E5%B0%81%E8%A3%85DOM%E5%BA%93/" title="JS编程接口2 对DOM库简单封装">JS编程接口2 对DOM库简单封装</a><time datetime="2023-05-09T13:14:01.000Z" title="发表于 2023-05-09 21:14:01">2023-05-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By AlphaDZL</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi ! Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.8.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="14,131,205" opacity="0.9" zIndex="-1" count="99" mobile="true" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.3/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script></div></body></html>
